@@ -5,7 +5,9 @@ My first application with Flutter, quite challenging for me as I'm more used to 
 It's basically a customisable rssFeed library.
 <div>
     <img src="https://i.ibb.co/kHYqKZc/Screenshot-20191121-203240.jpg" width="190" height="400" />
+    <img src="https://i.ibb.co/0YZT6c0/Screenshot-20191121-204739.jpg" width="190" height="400" />
     <img src="https://i.ibb.co/Rpm0TzZ/Screenshot-20191121-203246.jpg" width="190" height="400" />
+    
 </div>
 
 
