@@ -88,7 +88,7 @@ class _ChannelListState extends State<ChannelList> {
     }
 
     return new Container(
-        height: MediaQuery.of(context).size.height / 3,
+        //height: MediaQuery.of(context).size.height / 3,
         child: new Column(
           children: <Widget>[
             new Row(

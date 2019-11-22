@@ -19,15 +19,20 @@ class _FloatingAddButton extends State<FloatingAddButton> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-          curve: Curves.bounceInOut,
-          duration:Duration(milliseconds: 500),
+          curve: Curves.easeOut,
+          duration:Duration(milliseconds: 300),
           height: widget.buttonVisible ? 50 :0,
           width: widget.buttonVisible ? 50 :0,
           child: new FloatingActionButton(
                   onPressed: navigateToNewChannel,
                   
                   elevation: 5,
-                  child: new Icon(Icons.add, color: myWhite,)
+                  child: 
+                    AnimatedContainer(
+                      curve: Curves.easeOut,
+                      duration:Duration(milliseconds: 300),
+                      child: 
+                        new Icon(Icons.add, color: myWhite,size: widget.buttonVisible ? 25:0,))
                 )
               
     );
