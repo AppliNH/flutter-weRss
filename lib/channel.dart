@@ -43,8 +43,15 @@ class _ChannelListState extends State<ChannelList> {
           setState(() {
             var newArticle;
             var content = channel.items[i].content;
+            var desc = channel.items[i].description;
+            var enclosure = channel.items[i].enclosure;
 
-            if(content !=null)
+            if(channel.items[i].description != null && desc.contains("<img")) {
+              var articleImage = getImgFromDesc(channel.items[i].description);
+              newArticle = new Article(channel.items[i].title, articleImage, channel.items[i].link);
+            }
+            
+            else if(content !=null)
             {
               if(channel.items[i].content.images != null) {
                 newArticle = new Article(channel.items[i].title, channel.items[i].content.images.first, channel.items[i].link);
@@ -55,8 +62,13 @@ class _ChannelListState extends State<ChannelList> {
               }
             }
 
-            else {
-              newArticle = new Article(channel.items[i].title, realOwlImage, channel.items[i].link);
+            else if(enclosure != null) {
+              newArticle = new Article(channel.items[i].title, channel.items[i].enclosure.url, channel.items[i].link);
+            }
+
+
+            else if (channel.image.url != null) {
+              newArticle = new Article(channel.items[i].title, channel.image.url, channel.items[i].link);
             }
             
             articles.add(newArticle);
@@ -68,6 +80,14 @@ class _ChannelListState extends State<ChannelList> {
     });
 }
 
+  getImgFromDesc(String desc) {
+    var descri = desc.replaceAll('"', '\\"');
+    //print(descri);
+    RegExp exp = new RegExp(r'<img src=\\"([\w\W]+?)\\"');
+    var matches = exp.allMatches(descri);
+    var match = matches.elementAt(0);
+    return ("${match.group(1)}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +140,9 @@ class _ChannelListState extends State<ChannelList> {
                                   ),
                                 
                               ),
+                            
                         ],
+                        
                     onSelected: (String value) {
                       switch (value) {
                         case 'delete':

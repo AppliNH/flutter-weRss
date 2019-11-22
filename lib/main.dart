@@ -10,7 +10,7 @@ void main(){
 
 const myWhite = const Color(0xFFFAFAFA);
 const myDarkness = const Color(0xFF212121);
-const opaq = const Color.fromRGBO(0,0,0,0.2);
+const opaq = const Color.fromRGBO(0,0,0,0.5);
 const realOwlImage = "https://images2.minutemediacdn.com/image/upload/c_fill,g_auto,h_1248,w_2220/f_auto,q_auto,w_1100/v1555388152/shape/mentalfloss/istock_000023765401_small.jpg";
 
 var techFeed = new NewsFeed(0,"👨‍💻 Tech News", "https://medium.com/feed/better-programming");
@@ -72,9 +72,9 @@ class _HomePage extends State<HomePage> {
   }  
 
   void deleteChannel(NewsFeed newsFeed) {
-
+    
     listOfFeeds.removeWhere( (feed) => feed.id == newsFeed.id );
-    setState(() { });
+    setState(() { buttonVisible = true; });
   }
   
   _scrollListener() {
