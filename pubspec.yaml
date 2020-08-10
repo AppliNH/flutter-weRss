@@ -19,14 +19,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  emoji_picker: ^0.0.2
   webfeed: ^0.4.2
-  http: 0.12.0+2
-  webview_flutter: 0.3.15+1
-  url_launcher: ^5.2.5
-  animator: 1.0.0+2
-  shared_preferences: 0.5.4+5
-  flutter_spinkit: ^3.1.0
+  http: ^0.12.2
+  webview_flutter: 0.3.22+1
+  url_launcher: 5.5.0
+  animator: 2.0.1
+  shared_preferences: 0.5.8
+  flutter_spinkit: 4.1.2+1
+  provider: 4.3.2
+
 
 
 

@@ -4,21 +4,20 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import  'package:flutter_spinkit/flutter_spinkit.dart';
 
-const myDarkness = const Color(0xFF212121);
 
-class ArticleScaffold extends StatefulWidget {
-
+class ArticleWebView extends StatefulWidget {
+  static const routeName = "/article-web-view";
   String sourceUrl;
 
-  ArticleScaffold(String sourceUrl) {
+  ArticleWebView(String sourceUrl) {
     this.sourceUrl = sourceUrl;
   }
 
   @override
-  _ArticleScaffoldState createState() => _ArticleScaffoldState();
+  _ArticleWebViewState createState() => _ArticleWebViewState();
 }
 
-class _ArticleScaffoldState extends State<ArticleScaffold> {
+class _ArticleWebViewState extends State<ArticleWebView> {
   bool isLoading = true;
   num _stackToView = 1;
   @override
