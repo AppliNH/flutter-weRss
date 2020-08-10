@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myflutterapp/providers/Feeds.dart';
+import 'package:myflutterapp/providers/scrollControl.dart';
 import 'package:myflutterapp/screens/addNewChannel.dart';
 import 'package:myflutterapp/screens/homeScreen.dart';
 
@@ -18,9 +19,17 @@ const realOwlImage =
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-        value: FeedsProvider(),
-        child: MaterialApp(
+    return 
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<FeedsProvider>(
+          create: (ctx) => FeedsProvider()
+        ),
+        ChangeNotifierProvider<ScrollControl>(
+          create: (ctx) => ScrollControl()
+        ),
+      ],
+      child: MaterialApp(
             title: "My Application",
             theme: new ThemeData(primarySwatch: Colors.blueGrey),
             debugShowCheckedModeBanner: false,
@@ -30,6 +39,7 @@ class MyApp extends StatelessWidget {
               NewChannelScreen.routeName: (ctx) => NewChannelScreen()
               }
           )
-      );
+    );
+    
   }
 }

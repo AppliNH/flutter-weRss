@@ -32,9 +32,11 @@ class _ArticleWebViewState extends State<ArticleWebView> {
     void _launchURL(String url) async {
       if (await canLaunch(url)) {
         await launch(url);
-      } else {
-        throw 'Could not launch $url';
-      }}
+      } 
+      // else {
+      //   throw 'Could not launch $url';
+      // }
+      }
 
 
     return new Scaffold(

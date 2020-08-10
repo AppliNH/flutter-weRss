@@ -9,12 +9,12 @@ import 'package:http/http.dart' as http;
 
 typedef DeleteCallback = void Function(NewsFeed newsFeed);
 
-class ChannelList extends StatelessWidget {
+class Channel extends StatelessWidget {
   NewsFeed newsFeed;
   DeleteCallback deleteChannel;
   bool refreshChannelTrigger;
 
-  ChannelList(NewsFeed newsFeed, DeleteCallback deleteChannel,
+  Channel(NewsFeed newsFeed, DeleteCallback deleteChannel,
       bool refreshChannelTrigger) {
     this.newsFeed = newsFeed;
     this.deleteChannel = deleteChannel;
@@ -37,7 +37,6 @@ class ChannelList extends StatelessWidget {
         var desc = channel.items[i].description;
         var enclosure = channel.items[i].enclosure;
 
-        //print(channel.items[i].title);
 
         if (channel.items[i].description != null && desc.contains("<img")) {
           var articleImage = getImgFromDesc(channel.items[i].description);
@@ -68,7 +67,6 @@ class ChannelList extends StatelessWidget {
 
   getImgFromDesc(String desc) {
     var descri = desc.replaceAll('"', '\\"');
-    //print(descri);
     RegExp exp = new RegExp(r'<img src=\\"([\w\W]+?)\\"');
     var matches = exp.allMatches(descri);
     var match = matches.elementAt(0);

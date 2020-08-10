@@ -1,8 +1,10 @@
 import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
+import 'package:myflutterapp/providers/scrollControl.dart';
 import 'package:myflutterapp/screens/articleView.dart';
 import 'package:myflutterapp/widgets/channel.dart';
 import 'package:myflutterapp/classes/NewsFeed.dart';
+import 'package:myflutterapp/widgets/channelsList.dart';
 import 'package:myflutterapp/widgets/floatingAddButton.dart';
 import 'package:myflutterapp/main.dart';
 import 'package:myflutterapp/providers/Feeds.dart';
@@ -17,19 +19,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ScrollController _scrollControl;
 
   bool refreshChannelsTrigger = false;
   bool buttonVisible = true;
 
-  @override
-  void initState() {
-    _scrollControl = ScrollController();
-    _scrollControl.addListener(_scrollListener);
-    super.initState();
-  }
-
   void refreshChannels() {
+    Provider.of<ScrollControl>(context, listen:false).controlButtonVisib(true);
     setState(() {
       refreshChannelsTrigger = true;
     });
@@ -38,24 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void deleteChannel(NewsFeed newsFeed) {
     Provider.of<FeedsProvider>(context, listen: false)
         .deleteNewsFeed(newsFeed.id);
-    setState(() {
-      buttonVisible = true;
-    });
-  }
-
-  _scrollListener() {
-    if (_scrollControl.position.userScrollDirection ==
-        ScrollDirection.reverse) {
-      setState(() {
-        buttonVisible = false;
-      });
-      if (_scrollControl.position.userScrollDirection ==
-          ScrollDirection.forward) {
-        setState(() {
-          buttonVisible = true;
-        });
-      }
-    }
   }
 
   @override
@@ -66,14 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: myDarkness,
         title: Container(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(Icons.rss_feed),
-                Text("weRss", style: TextStyle(fontSize: 42)),
-              ],
-            )),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.rss_feed),
+            Text("weRss", style: TextStyle(fontSize: 42)),
+          ],
+        )),
 
-        //leading:  Icon (Icons.rss_feed),
         actions: <Widget>[
           GestureDetector(
               onTap: refreshChannels,
@@ -81,40 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: EdgeInsets.only(right: 10), child: Icon(Icons.sync)))
         ],
       ),
-      body: Container(
-          color: myDarkness,
-          padding: EdgeInsets.only(top: 10, left: 5),
-          child: 
-              Consumer<FeedsProvider>(
-                  builder: (ctx, listOfFeeds, ch) => 
-                  FutureBuilder(
-                    future: listOfFeeds.loadFromStorage(),
-                    builder: (ctx, result) =>
-                    result.connectionState == ConnectionState.waiting ?
-                      CircularProgressIndicator()
-                    :
-                    listOfFeeds.items.length == 0 ?
-                      Center(child: Text("Add some NewsFeed RSS using the '+' button !", style: TextStyle(color: myWhite)))
-                    :
-                        ListView.builder(
-                            //controller: _scrollControl,
-                            itemCount: listOfFeeds.items.length,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  key: ValueKey(listOfFeeds.items[index].id.toString()),
-                                  child: ChannelList(listOfFeeds.items[index],
-                                      deleteChannel, refreshChannelsTrigger));
-                            },
-                          )
-                      
-
-                  )
-                    
-              )
-       
-          ),
-      floatingActionButton: FloatingAddButton(true),
+      body: ChannelsList(
+          deleteChannel: deleteChannel,
+          refreshChannelsTrigger: refreshChannelsTrigger),
+      floatingActionButton: FloatingAddButton(isVisible: buttonVisible),
     );
   }
 }
+
+
